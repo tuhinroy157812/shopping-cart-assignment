@@ -151,6 +151,17 @@ svg {
   cursor:pointer;
 }
 
+.icons{
+  cursor:pointer;
+}
+
+.remove{
+  position: absolute;
+  right: 15px;
+  cursor: pointer;
+  z-index: 1;
+}
+
 /*Media Queries*/
 
 @media(max-width:767px){

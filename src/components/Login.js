@@ -15,7 +15,6 @@ function Login(props) {
        if(email!="" && password !=""){
        var result =  validateEmail(email);
        if(result == true){
-        toast.success("Success");
         localStorage.setItem('user', email);
         props.history.push("/home");
        }else{

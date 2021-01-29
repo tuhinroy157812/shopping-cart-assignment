@@ -1,4 +1,4 @@
-[
+module.exports =[
   {
     "name": "Fresho Kiwi - Green, 3 pcs",
     "imageURL": "/static/images/products/fruit-n-veg/kiwi-green.jpg",

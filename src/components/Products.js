@@ -11,6 +11,7 @@ function Products(props) {
     useEffect(() => {
         setSelectedItem(props.location.state && props.location.state.detail.id && props.location.state.detail.id)
         getCatagory();
+        window.scrollTo(0, 0)
     }, [])
 
     const getCatagory = () => {
@@ -35,9 +36,10 @@ function Products(props) {
         }
     }
 
+
     return (
         <div>
-            <Header />
+            <Header/>
             <div className="container p-0">
                 <div className="row">
                     <div className="col-md-3 d-none d-md-block">
@@ -58,7 +60,7 @@ function Products(props) {
                             {
                                 catagory && catagory.map((catagories) => {
                                     return (
-                                        <option className="menu" key={catagories.id}>{catagories.name}</option>
+                                        <option className={`my-1 ${id == catagories.id ? "font-weight-bold" : ((selectedItem == catagories.id)&& id==undefined)? "font-weight-bold":""} menu`} key={catagories.id} onClick={()=>getMenu(catagories.id)}>{catagories.name}</option>
                                     )
                                 })
                             }
@@ -77,4 +79,5 @@ function Products(props) {
     )
 }
 
-export default Products
+
+export default Products;
