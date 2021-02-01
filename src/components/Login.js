@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FaEye,FaEyeSlash } from "react-icons/fa";
 import Header from './Header';
 import Footer from './Footer';
 import { ToastContainer, toast } from 'react-toastify';
@@ -10,6 +11,7 @@ toast.configure()
 function Login(props) {
     const [email, setEmail] = useState("")
     const [password,setPassword] = useState("")
+    const [viewPassword,setViewPassword] = useState(false)
     
    const login=()=>{
        if(email!="" && password !=""){
@@ -32,6 +34,10 @@ function Login(props) {
             return re.test(email);
         }
 
+        const getPassword=()=>{
+            setViewPassword(!viewPassword)
+        }
+
     return (
         <div>
             <Header />
@@ -48,7 +54,8 @@ function Login(props) {
                                 <label for="exampleInputEmail1" className="emaillabel">Email</label>
                             </div>
                             <div className="form-group passwordGroup">
-                                <input type="password" value={password} className="form-control" id="exampleInputPassword1" placeholder="Your password" onChange={e => setPassword(e.target.value)}/>
+                                <span className="visiblePass" onClick={getPassword}>{viewPassword ?<FaEye />:<FaEyeSlash />}</span>
+                                <input type={viewPassword ?"text":"password"} value={password} className="form-control" id="exampleInputPassword1" placeholder="Your password" onChange={e => setPassword(e.target.value)}/>
                                 <label for="exampleInputPassword1" className="passwordlabel">Password</label>
                             </div>
                             <button type="button" className="btn btn-primary w-100 login-btn" onClick={login}>Login</button>

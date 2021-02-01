@@ -27,6 +27,7 @@ function Cart(props) {
 
     const remove = (id) => {
         const removeItem = storeData.filter(x => x.id !== id)
+        setStoreData([...removeItem])
         if (removeItem.length == 0) {
             props.emptyStore([])
         }

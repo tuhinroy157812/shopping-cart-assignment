@@ -11,7 +11,8 @@ function ProductLists(props) {
     useEffect(() => {
         setSelectedItem(props.id ? props.id : props.selectedItem ? props.selectedItem : "")
         getProducts();
-    }, [props])
+        props.latestProduct(product)
+    }, [props,product])
 
     const getProducts = () => {
         fetch("http://localhost:3001/products")
@@ -26,12 +27,12 @@ function ProductLists(props) {
         if (item == -1) {
             Object.assign(prod, { quantity: 1 });
             setProduct(oldArray => [...oldArray, prod])
-            props.latestProduct(product)
+            // props.latestProduct(product)
         }
         else {
             product[item].quantity = product[item].quantity + 1;
             setProduct(oldArray => [...product])
-            props.latestProduct(product)
+            // props.latestProduct(product)
         }
     }
 

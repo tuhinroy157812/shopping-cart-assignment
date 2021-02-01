@@ -161,6 +161,12 @@ svg {
   cursor: pointer;
   z-index: 1;
 }
+.visiblePass{
+  position: absolute;
+    right: 0px;
+    bottom: 5px;
+    cursor:pointer;
+}
 
 /*Media Queries*/
 
