@@ -14,7 +14,7 @@ function Login(props) {
     const [viewPassword,setViewPassword] = useState(false)
     
    const login=()=>{
-       if(email!="" && password !=""){
+       if(email!=="" && password !==""){
        var result =  validateEmail(email);
        if(result == true){
         localStorage.setItem('user', email);
@@ -51,12 +51,12 @@ function Login(props) {
                         <form>
                             <div className="form-group emailGroup">
                                 <input type="email" value={email} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your Email" onChange={e => setEmail(e.target.value)} />
-                                <label for="exampleInputEmail1" className="emaillabel">Email</label>
+                                <label htmlFor="exampleInputEmail1" className="emaillabel">Email</label>
                             </div>
                             <div className="form-group passwordGroup">
                                 <span className="visiblePass" onClick={getPassword}>{viewPassword ?<FaEye />:<FaEyeSlash />}</span>
                                 <input type={viewPassword ?"text":"password"} value={password} className="form-control" id="exampleInputPassword1" placeholder="Your password" onChange={e => setPassword(e.target.value)}/>
-                                <label for="exampleInputPassword1" className="passwordlabel">Password</label>
+                                <label htmlFor="exampleInputPassword1" className="passwordlabel">Password</label>
                             </div>
                             <button type="button" className="btn btn-primary w-100 login-btn" onClick={login}>Login</button>
                         </form>

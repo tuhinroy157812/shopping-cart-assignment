@@ -12,28 +12,23 @@ function Cart(props) {
     }, [props.products, storeData])
 
     const increase = (inc) => {
-        const getIndex = storeData.findIndex(x => x.id == inc.id)
+        const getIndex = storeData.findIndex(x => x.id === inc.id)
         storeData[getIndex].quantity = inc.quantity + 1;
         setStoreData([...storeData])
     }
 
     const decrement = (desc) => {
         if (desc.quantity > 1) {
-            const getIndex = storeData.findIndex(x => x.id == desc.id)
+            const getIndex = storeData.findIndex(x => x.id === desc.id)
             storeData[getIndex].quantity = desc.quantity - 1;
             setStoreData([...storeData])
         }
     }
 
     const remove = (id) => {
-        const removeItem = storeData.filter(x => x.id !== id)
-        setStoreData([...removeItem])
-        if (removeItem.length == 0) {
-            props.emptyStore([])
-        }
-        else {
-            props.latestProduct(removeItem)
-        }
+        const getIndex = storeData.findIndex(x => x.id === id)
+        storeData.splice(getIndex, 1);
+        setStoreData([...storeData])
     }
 
     return (
@@ -43,10 +38,10 @@ function Cart(props) {
                     return (
                         <div className="row cart-item-img mb-3" key={item.id}>
                             <span className="remove" onClick={() => remove(item.id)}><FaTimes /></span>
-                            <div className="col-2 m-auto">
+                            <div className="col-md-2 col-4 m-auto">
                                 <img src={item.imageURL} className="img-fluid w-100" alt="items" />
                             </div>
-                            <div className="col-10">
+                            <div className="col-md-10 col-8">
                                 <p>{item.name}</p>
                                 <p><span className="icons" onClick={() => decrement(item)}><FaMinusCircle /></span> {item.quantity} <span className="icons" onClick={() => increase(item)}><FaPlusCircle /></span>&nbsp; &nbsp; <span className="times"><FaTimes /> Rs.{item.price}</span> <span className="float-right">Rs.{item.quantity * item.price}</span></p>
                             </div>

@@ -56,7 +56,7 @@ function Products(props) {
                         </aside>
                     </div>
                     <div className="col-12 d-md-none d-block my-2">
-                        <select class="form-control" id="exampleFormControlSelect1">
+                        <select className="form-control" id="exampleFormControlSelect1">
                             {
                                 catagory && catagory.map((catagories) => {
                                     return (

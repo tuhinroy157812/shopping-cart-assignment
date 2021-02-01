@@ -181,6 +181,9 @@ svg {
   .modal-dialog{
     clear:both;
   }
+  .product-desc-btn,.btn-danger{
+    font-size:12px;
+  }
 }
 
 @media(min-width:768px){

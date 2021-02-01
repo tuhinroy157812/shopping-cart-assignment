@@ -31,9 +31,9 @@ function Header(props) {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="#">
+      <Link className="navbar-brand" to="/home">
         <img src="./img/logo.png" className="img-fluid logo" alt="logo" />
-      </a>
+      </Link>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
@@ -58,7 +58,7 @@ function Header(props) {
         <br />
         <div className="header-cart" data-toggle="modal" data-target="#exampleModalLong"><FaCartPlus />&nbsp;{props.products && props.products.length} Items</div>
       </div>
-      <div className="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+      <div className="modal fade" id="exampleModalLong" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
         <div className="modal-dialog h-100" role="document">
           <div className="modal-content">
             <div className="modal-header">
