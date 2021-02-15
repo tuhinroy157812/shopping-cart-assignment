@@ -21,10 +21,9 @@ body,html{
 .login-btn:hover{
   background-color: #d00054;
 }
-#exampleInputEmail1,#exampleInputPassword1,#firstname,#lastname,#confirmpassword{
-  border-right:none;
-  border-top:none;
-  border-left:none;
+.inputField{
+  border:none;
+  border-bottom:1px solid #cdcdcd;
 }
 .form-group{
 position: relative;
@@ -32,7 +31,7 @@ position: relative;
 .form-control::placeholder{
   color:transparent;
 }
-#exampleInputEmail1:focus,#exampleInputPassword1:focus,#firstname:focus,#lastname:focus,#confirmpassword:focus{
+.inputField:focus{
   border-color: #50dae4;
   box-shadow: none;
 }
@@ -49,6 +48,13 @@ input:not(:placeholder-shown) + label
   transform: translateY(-2px);
   color: #50dae4;
   font-size: 12px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 .emaillabel,.passwordlabel{

@@ -1,35 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 import Header from './Header';
+import { fetchBannerDetails, fetchCategoriesDetails } from '../action/homeAction';
 
 function Home(props) {
-    const [catagory, setCatagory] = useState()
-    const [banner, setBanner] = useState()
+    const banner = useSelector(store => store.reducer.bannerItems)
+    const catagory = useSelector(store => store.reducer.catagories)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        getCatagory();
-        getBanners();
+        dispatch(fetchBannerDetails())
+        dispatch(fetchCategoriesDetails())
         window.scrollTo(0, 0)
     }, [])
-
-    const getBanners = () => {
-
-        fetch("http://localhost:3001/banner")
-            .then(res => res.json())
-            .then(data => {
-                setBanner(data)
-            })
-    }
-
-    const getCatagory = () => {
-        fetch("http://localhost:3001/catagory")
-            .then(res => res.json())
-            .then(data => {
-                data && data.sort((a, b) => (a.order > b.order) ? 1 : -1);
-                setCatagory(data);
-            })
-    }
 
     const selectedCatagory = (data) => {
         props.history.push({
@@ -65,10 +50,10 @@ function Home(props) {
                     catagory && catagory.map((catagories, i) => {
                         return (
                             <div className="row my-5 cata" key={catagories.id}>
-                                <div className={`col-md-4 col-5 m-auto ${i % 2 == 0 ? "order-1" : "order-2"}`}>
+                                <div className={`col-md-4 col-5 m-auto ${i % 2 === 0 ? "order-1" : "order-2"}`}>
                                     <img src={catagories.imageUrl} className="img-fluid d-flex m-auto justify-content-center" alt={catagories.name} />
                                 </div>
-                                <div className={`col-md-8 col-7 text-center product-desc-btn m-md-auto ${i % 2 == 0 ? "order-2" : "order-1"}`}>
+                                <div className={`col-md-8 col-7 text-center product-desc-btn m-md-auto ${i % 2 === 0 ? "order-2" : "order-1"}`}>
                                     <p className="font-weight-bold">{catagories.name}</p>
                                     <p>{catagories.description}</p>
                                     <button className="btn btn-danger" onClick={() => selectedCatagory(catagories)}>{`Explore ${catagories.name}`}</button>

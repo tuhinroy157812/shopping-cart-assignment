@@ -1,34 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import {useDispatch,useSelector} from 'react-redux';
 import Header from './Header';
-import Catagories from '../server/categories/index.get';
 import ProductList from './ProductLists';
+import {fetchMenuDetails} from '../action/productAction.js';
 
 function Products(props) {
-    const [catagory, setCatagory] = useState();
     const [selectedItem,setSelectedItem]  = useState();
     const [id,setId] = useState();
+    const dispatch = useDispatch();
+
+    const menu = useSelector( store=> store.reducer.menu)
 
     useEffect(() => {
         setSelectedItem(props.location.state && props.location.state.detail.id && props.location.state.detail.id)
-        getCatagory();
         window.scrollTo(0, 0)
+        dispatch(fetchMenuDetails())
     }, [])
-
-    const getCatagory = () => {
-        Catagories.sort(function (a, b) {
-            var keyA = new Date(a.order),
-                keyB = new Date(b.order);
-            if (keyA < keyB) return -1;
-            if (keyA > keyB) return 1;
-            return 0;
-        });
-
-        setCatagory(Catagories);
-    }
 
     const getMenu=(catagoryid)=>{
         setSelectedItem()
-        if(catagoryid == id){
+        if(catagoryid === id){
             setId()  
         }
         else{
@@ -46,9 +37,9 @@ function Products(props) {
                         <aside>
                             <ul className="side-nav pr-4">
                                 {
-                                    catagory && catagory.map((catagories) => {
+                                    menu && menu.map((catagories) => {
                                         return (
-                                            <li className={`my-1 ${id == catagories.id ? "font-weight-bold" : ((selectedItem == catagories.id)&& id==undefined)? "font-weight-bold":""} menu`} key={catagories.id} onClick={()=>getMenu(catagories.id)}>{catagories.name}</li>
+                                            <li className={`my-1 ${id === catagories.id ? "font-weight-bold" : ((selectedItem === catagories.id)&& id===undefined)? "font-weight-bold":""} menu`} key={catagories.id} onClick={()=>getMenu(catagories.id)}>{catagories.name}</li>
                                         )
                                     })
                                 }
@@ -58,9 +49,9 @@ function Products(props) {
                     <div className="col-12 d-md-none d-block my-2">
                         <select className="form-control" id="exampleFormControlSelect1">
                             {
-                                catagory && catagory.map((catagories) => {
+                                menu && menu.map((catagories) => {
                                     return (
-                                        <option className={`my-1 ${id == catagories.id ? "font-weight-bold" : ((selectedItem == catagories.id)&& id==undefined)? "font-weight-bold":""} menu`} key={catagories.id} onClick={()=>getMenu(catagories.id)}>{catagories.name}</option>
+                                        <option className={`my-1 ${id === catagories.id ? "font-weight-bold" : ((selectedItem === catagories.id)&& id===undefined)? "font-weight-bold":""} menu`} key={catagories.id} onClick={()=>getMenu(catagories.id)}>{catagories.name}</option>
                                     )
                                 })
                             }

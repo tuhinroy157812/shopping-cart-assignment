@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FaCartPlus } from "react-icons/fa";
 import Cart from './Cart';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {connect} from 'react-redux';
 
 toast.configure()
 
 function Header(props) {
   const [amount, setAmount] = useState()
+  const selectedData = useSelector(store => store.cartReducer.currentproducts)
+  const data = useSelector(store => store)
 
   const loginUser = () => {
-    if (localStorage.getItem("user") == null) {
+    if (localStorage.getItem("user") === null) {
       toast.warning("Please Login First!!!");
     }
   }
 
   useEffect(() => {
-    let total=0;
-     for(let i in props.products){
-      total += props.products[i].price * props.products[i].quantity
-     }
-     setAmount(total)
-  }, [props.products])
+    let total = 0;
+    for (let i in selectedData) {
+      total += selectedData[i].price * selectedData[i].quantity
+    }
+    setAmount(total)
+
+    if (window.location.pathname === '/') {
+      localStorage.clear()
+    }
+
+  }, [data])
 
   const Logout = () => {
     localStorage.clear();
@@ -41,10 +48,10 @@ function Header(props) {
       <div className="collapse navbar-collapse font-weight-bold" id="navbarSupportedContent">
         <ul className="navbar-nav">
           <li className="nav-item" onClick={loginUser}>
-            <Link className="nav-link" to={`${localStorage.getItem("user") == null ? "/" : "/home"}`}>Home</Link>
+            <Link className="nav-link" to={`${localStorage.getItem("user") === null ? "/" : "/home"}`}>Home</Link>
           </li>
           <li className="nav-item" onClick={loginUser}>
-            <Link className="nav-link" to={`${localStorage.getItem("user") == null ? "/" : "/Products"}`}>Products</Link>
+            <Link className="nav-link" to={`${localStorage.getItem("user") === null ? "/" : "/Products"}`}>Products</Link>
           </li>
         </ul>
         <ul className="navbar-nav ml-auto">
@@ -56,13 +63,13 @@ function Header(props) {
           </li>
         </ul>
         <br />
-        <div className="header-cart" data-toggle="modal" data-target="#exampleModalLong"><FaCartPlus />&nbsp;{props.products && props.products.length} Items</div>
+        <div className="header-cart" data-toggle="modal" data-target="#exampleModalLong"><FaCartPlus />&nbsp;{selectedData && selectedData.length} Items</div>
       </div>
       <div className="modal fade" id="exampleModalLong" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
         <div className="modal-dialog h-100" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLongTitle">My Cart ({props.products && props.products.length} items)</h5>
+              <h5 className="modal-title" id="exampleModalLongTitle">My Cart ({selectedData && selectedData.length} items)</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -71,7 +78,7 @@ function Header(props) {
               <Cart />
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-primary w-100 checkout-btn"><span className={`${props.products && props.products.length == 0 ?"text-center":"float-left"}`}>{props.products && props.products.length == 0 ? "Start Shopping" : "Proceed to checkout"}</span> <span className="float-right">{props.products == 0  ? "" : "Rs." + amount + `>`} </span></button>
+              <button type="button" className="btn btn-primary w-100 checkout-btn"><span className={`${selectedData && selectedData.length === 0 ? "text-center" : "float-left"}`}>{selectedData && selectedData.length === 0 ? "Start Shopping" : "Proceed to checkout"}</span> <span className="float-right">{selectedData && selectedData.length === 0 ? "" : "Rs." + amount} </span></button>
             </div>
           </div>
         </div>
@@ -80,10 +87,6 @@ function Header(props) {
   )
 }
 
-function mapStateToProps(state){
-return{
-  products:state.currentproducts
-}
-}
 
-export default connect(mapStateToProps)(Header);
+
+export default Header;

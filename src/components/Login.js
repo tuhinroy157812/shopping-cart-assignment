@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaEye,FaEyeSlash } from "react-icons/fa";
 import Header from './Header';
 import Footer from './Footer';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -16,7 +16,7 @@ function Login(props) {
    const login=()=>{
        if(email!=="" && password !==""){
        var result =  validateEmail(email);
-       if(result == true){
+       if(result === true){
         localStorage.setItem('user', email);
         props.history.push("/home");
        }else{
@@ -28,7 +28,7 @@ function Login(props) {
        }
    }
 
-   function validateEmail(email) 
+   const validateEmail=(email)=> 
         {
             var re = /\S+@\S+\.\S+/;
             return re.test(email);
@@ -50,13 +50,13 @@ function Login(props) {
                     <div className="col-md-6 login-form">
                         <form>
                             <div className="form-group emailGroup">
-                                <input type="email" value={email} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your Email" onChange={e => setEmail(e.target.value)} />
-                                <label htmlFor="exampleInputEmail1" className="emaillabel">Email</label>
+                                <input type="email" value={email} className="form-control inputField" id="loginemail" aria-describedby="emailHelp" placeholder="Your Email" onChange={e => setEmail(e.target.value)} />
+                                <label htmlFor="loginemail" className="emaillabel">Email</label>
                             </div>
                             <div className="form-group passwordGroup">
                                 <span className="visiblePass" onClick={getPassword}>{viewPassword ?<FaEye />:<FaEyeSlash />}</span>
-                                <input type={viewPassword ?"text":"password"} value={password} className="form-control" id="exampleInputPassword1" placeholder="Your password" onChange={e => setPassword(e.target.value)}/>
-                                <label htmlFor="exampleInputPassword1" className="passwordlabel">Password</label>
+                                <input type={viewPassword ?"text":"password"} value={password} className="form-control inputField" id="loginpassword" placeholder="Your password" onChange={e => setPassword(e.target.value)}/>
+                                <label htmlFor="loginpassword" className="passwordlabel">Password</label>
                             </div>
                             <button type="button" className="btn btn-primary w-100 login-btn" onClick={login}>Login</button>
                         </form>

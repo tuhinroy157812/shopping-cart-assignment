@@ -1,17 +1,34 @@
-const defaultState={
-    currentproducts:[]
+const defaultState = {
+    menu: []
 }
 
-function reducer(state=defaultState,action){
-    switch(action.type){
-        case "CART_ITEMS":
-            return{
+function reducer(state = defaultState, action) {
+    switch (action.type) {
+        case "MENU":
+            return {
                 ...state,
-                currentproducts:action.payload
+                menu: action.payload
             }
-            case "EMPTY_ITEM":
-                state = defaultState
-        default : return state;
+
+        case "PRODUCTS":
+            return {
+                ...state,
+                product: action.payload
+            }
+
+            case "BANNER":
+            return {
+                ...state,
+                bannerItems: action.payload
+            }
+
+            case "CATEGORIES":
+            return {
+                ...state,
+                catagories: action.payload
+            }
+            
+        default: return state;
     }
 }
 

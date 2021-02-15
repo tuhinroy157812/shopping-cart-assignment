@@ -1,47 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-
-let item
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductsDetails } from '../action/productAction.js';
 
 function ProductLists(props) {
-    const [totalProduct, setTotalProduct] = useState([])
     const [selectedItem, setSelectedItem] = useState()
-    const [product, setProduct] = useState([])
+    const items = useSelector(store => store.reducer.product)
+    const cartitems = useSelector(store => store.cartReducer.currentproducts)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         setSelectedItem(props.id ? props.id : props.selectedItem ? props.selectedItem : "")
-        getProducts();
-        props.latestProduct(product)
-    }, [props,product])
-
-    const getProducts = () => {
-        fetch("http://localhost:3001/products")
-            .then(res => res.json())
-            .then(data => {
-                setTotalProduct(data)
-            })
-    }
+        if (items === undefined) {
+            dispatch(fetchProductsDetails())
+        }
+    }, [props.selectedItem, props.id])
 
     const addToCart = (prod) => {
-        item = product.findIndex(x => x.id === prod.id);
-        if (item == -1) {
+        let item = cartitems.findIndex(x => x.id === prod.id);
+        if (item === -1) {
             Object.assign(prod, { quantity: 1 });
-            setProduct(oldArray => [...oldArray, prod])
-            // props.latestProduct(product)
+            dispatch({ type: "CART_NEW_ITEMS", payload: prod })
         }
         else {
-            product[item].quantity = product[item].quantity + 1;
-            setProduct(oldArray => [...product])
-            // props.latestProduct(product)
+            dispatch({ type: "INCREMENT", payload: prod })
         }
     }
 
     return (
         <div className="row">
             {
-                totalProduct && totalProduct.map((prod, i) => {
+                items && items.map((prod, i) => {
                     return (
-                        selectedItem && selectedItem == prod.category ?
+                        selectedItem && selectedItem === prod.category ?
                             <>
                                 <div className="col-md-3 col-12 items my-3" key={prod.id}>
                                     <div className="row">
@@ -69,7 +59,7 @@ function ProductLists(props) {
                                 </div>
                             </>
                             :
-                            selectedItem == "" ?
+                            selectedItem === "" ?
                                 <>
                                     <div className="col-md-3 col-12 items my-3" key={prod.id}>
                                         <div className="row">
@@ -105,15 +95,4 @@ function ProductLists(props) {
         </div>
     )
 }
-function mapStateToProps(state) {
-    return {
-        finalItems: state.currentproducts
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        latestProduct: (product) => { dispatch({ type: "CART_ITEMS", payload: product }) }
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(ProductLists);
+export default ProductLists;

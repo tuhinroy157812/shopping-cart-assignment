@@ -1,40 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import { FaPlusCircle, FaTimes, FaMinusCircle } from "react-icons/fa";
-import { connect } from 'react-redux';
 
 function Cart(props) {
 
-    const [storeData, setStoreData] = useState()
+    const dispatch = useDispatch();
+    const selectedData = useSelector(store => store.cartReducer.currentproducts)
 
-    useEffect(() => {
-        setStoreData(props.products)
-        props.latestProduct(storeData)
-    }, [props.products, storeData])
 
     const increase = (inc) => {
-        const getIndex = storeData.findIndex(x => x.id === inc.id)
-        storeData[getIndex].quantity = inc.quantity + 1;
-        setStoreData([...storeData])
+        dispatch({ type: "INCREMENT", payload: inc })
     }
 
     const decrement = (desc) => {
         if (desc.quantity > 1) {
-            const getIndex = storeData.findIndex(x => x.id === desc.id)
-            storeData[getIndex].quantity = desc.quantity - 1;
-            setStoreData([...storeData])
+            dispatch({ type: "DECREMENT", payload: desc })
         }
     }
 
     const remove = (id) => {
-        const getIndex = storeData.findIndex(x => x.id === id)
-        storeData.splice(getIndex, 1);
-        setStoreData([...storeData])
+        dispatch({ type: "REMOVE", payload: id })
     }
 
     return (
         <div className="container">
             {
-                storeData && storeData.length > 0 ? storeData.map((item) => {
+                selectedData && selectedData.length > 0 ? selectedData.map((item) => {
                     return (
                         <div className="row cart-item-img mb-3" key={item.id}>
                             <span className="remove" onClick={() => remove(item.id)}><FaTimes /></span>
@@ -55,7 +46,7 @@ function Cart(props) {
                     </div>
             }
             {
-                props.products != undefined && props.products.length > 0 ?
+                selectedData != undefined && selectedData.length > 0 ?
                     <div className="row cart-item-img">
                         <div className="col-12">
                             <p className="text-center mb-0">You won't find it cheaper anywhere</p>
@@ -69,15 +60,4 @@ function Cart(props) {
     )
 }
 
-function mapStateToProps(state) {
-    return {
-        products: state.currentproducts
-    }
-}
-function mapDispatchToProps(dispatch) {
-    return {
-        latestProduct: (latest) => { dispatch({ type: "CART_ITEMS", payload: latest }) },
-        emptyStore: (empty) => { dispatch({ type: "EMPTY_ITEM", payload: empty }) }
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default Cart;

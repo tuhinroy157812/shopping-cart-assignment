@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Header from './Header';
 import Footer from './Footer';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -18,7 +18,7 @@ function Register(props) {
     const register = () => {
         if (email !== "" && password !== "" && repassword !== "" && firstName !== "" && lastName !== "") {
             var result = validateEmail(email);
-            if (result == true) {
+            if (result === true) {
                 if (password === repassword) {
                     localStorage.setItem('user', email);
                     props.history.push("/home");
@@ -51,23 +51,23 @@ function Register(props) {
                     <div className="col-md-6 login-form">
                         <form>
                             <div className="form-group">
-                                <input type="first" className="form-control" placeholder="First Name" id="firstname" aria-describedby="emailHelp" onChange={e => setFirstName(e.target.value)} />
+                                <input type="first" className="form-control inputField" placeholder="First Name" id="firstname" aria-describedby="emailHelp" onChange={e => setFirstName(e.target.value)} />
                                 <label htmlFor="firstname" className="emaillabel">First Name</label>
                             </div>
                             <div className="form-group">
-                                <input type="last" className="form-control" placeholder="Last Name" id="lastname" aria-describedby="emailHelp" onChange={e => setLastName(e.target.value)} />
+                                <input type="last" className="form-control inputField" placeholder="Last Name" id="lastname" aria-describedby="emailHelp" onChange={e => setLastName(e.target.value)} />
                                 <label htmlFor="lastname" className="emaillabel">Last Name</label>
                             </div>
                             <div className="form-group">
-                                <input type="email" className="form-control" placeholder="Your Email" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={e => setEmail(e.target.value)} />
+                                <input type="email" className="form-control inputField" placeholder="Your Email" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={e => setEmail(e.target.value)} />
                                 <label htmlFor="exampleInputEmail1" className="emaillabel">Email</label>
                             </div>
                             <div className="form-group">
-                                <input type="password" className="form-control" placeholder="Your Password" id="exampleInputPassword1" onChange={e => setPassword(e.target.value)} />
+                                <input type="password" className="form-control inputField" placeholder="Your Password" id="exampleInputPassword1" onChange={e => setPassword(e.target.value)} />
                                 <label htmlFor="exampleInputPassword1" className="passwordlabel">Password</label>
                             </div>
                             <div className="form-group">
-                                <input type="password" className="form-control" placeholder="Confirm Password" id="confirmpassword" onChange={e => setRePassword(e.target.value)} />
+                                <input type="password" className="form-control inputField" placeholder="Confirm Password" id="confirmpassword" onChange={e => setRePassword(e.target.value)} />
                                 <label htmlFor="confirmpassword" className="passwordlabel">Confirm Password</label>
                             </div>
                             <button type="button" className="btn btn-primary w-100 login-btn" onClick={register}>Signup</button>
